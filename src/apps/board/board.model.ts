@@ -17,17 +17,21 @@ const boardSchema = new Schema(
       unique: true,
     },
     settings: {
-      allowVoting: {
-        type: Boolean,
-        required: true,
-        default: true,
+      type: {
+        allowVoting: {
+          type: Boolean,
+          default: true,
+        },
+        allowComments: {
+          type: Boolean,
+          default: true,
+        },
       },
-      allowComments: {
-        type: Boolean,
-        required: true,
-        default: true,
+      default: {
+        allowVoting: true,
+        allowComments: true,
       },
-      default : {}
+      _id : false
     },
   },
   {
