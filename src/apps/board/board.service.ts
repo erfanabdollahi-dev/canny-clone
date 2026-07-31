@@ -24,14 +24,13 @@ class BoardService {
       slug,
     });
 
-    console.log(board);
     return board;
   }
 
   async getBoardBySlug(slug: string): Promise<BoardType> {
     const board = await BoardRepository.findBySlug(slug);
     if (board) {
-      return board.toObject();
+      return board;
     }
     throw new AppError("Board does not exists!", 404);
   }

@@ -8,11 +8,12 @@ class BoardRepository {
   }
   async create(data: BoardCreateType) {
     const board = await Board.create(data);
-    return board;
+    return board?.toObject();
   }
   async findBySlug(slug: string) {
     const board = await Board.findOne({ slug });
-    return board
+
+    return board?.toObject();
   }
 }
 
