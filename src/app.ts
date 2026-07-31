@@ -1,9 +1,15 @@
 import express from "express";
+import boardRouter from "./apps/board/index.js";
 
 const app = express();
 
+app.use("/api/boards", boardRouter);
+
 app.get("/", (req, res) => {
-  return res.send("test");
+  return res.json({
+    status: "ok",
+    service: "canny-clone-api",
+  });
 });
 
 export default app;
