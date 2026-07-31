@@ -31,11 +31,12 @@ const boardSchema = new Schema(
         allowVoting: true,
         allowComments: true,
       },
-      _id : false
+      _id: false,
     },
   },
   {
     timestamps: true,
+    versionKey: false,
   },
 );
 
