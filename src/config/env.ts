@@ -11,6 +11,7 @@ const getEnv = (var_name: string): string => {
 
 const env = {
   MONGO_URI: getEnv("MONGO_URI"),
+  PORT: getEnv("PORT"),
 };
 
 export default env;
