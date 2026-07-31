@@ -14,6 +14,12 @@ class BoardService {
     if (!input.title) throw new AppError("title field required", 400);
     const slug = slugify(input.title);
 
+    const exists = await Board.findOne({ slug });
+    
+    if(exists){
+      throw new AppError("Board already exists!", 400);
+    }
+
     const board = await Board.create({
       ...input,
       slug,
