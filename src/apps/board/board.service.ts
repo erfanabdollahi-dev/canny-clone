@@ -5,12 +5,24 @@ class BoardService {
   getBoards(): Board[] {
     return [
       {
-        name: "Feature Requests",
+        title: "Feature Requests",
+        description: "Request new features",
         slug: "feature-requests",
+
+        settings: {
+          allowVoting: true,
+          allowComments: true,
+        },
       },
       {
-        name: "Event Requests",
-        slug: "event-requests",
+        title: "Feature Requests",
+        description: "Request new features",
+        slug: "feature-requests",
+
+        settings: {
+          allowVoting: true,
+          allowComments: true,
+        },
       },
     ];
   }

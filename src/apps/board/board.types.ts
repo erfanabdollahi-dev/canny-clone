@@ -1,4 +1,10 @@
 export type Board = {
-  name: string;
+  title: string;
+  description: string;
   slug: string;
+
+  settings: {
+    allowVoting: boolean;
+    allowComments: boolean;
+  };
 };
