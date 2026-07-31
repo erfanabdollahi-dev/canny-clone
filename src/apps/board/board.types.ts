@@ -16,10 +16,9 @@ export type BoardType = {
   updatedAt: Date;
 };
 
-export type CreateBoardType = {
+export type BoardCreateType = {
   title: string;
   description: string;
-  slug: string;
 
   settings?: {
     allowVoting?: boolean;
