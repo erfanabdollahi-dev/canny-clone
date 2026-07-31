@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import type { BoardType, BoardCreateType } from "./board.types.js";
 import Board from "./board.model.js";
 import slugify from "@/utils/slugify.js";
+import { AppError } from "@/error/app-error.js";
 
 class BoardService {
   // getting all the boards
@@ -10,7 +11,7 @@ class BoardService {
   }
 
   async createBoard(input: BoardCreateType): Promise<BoardType> {
-    if (!input.title) throw new Error("title not provided");
+    if (!input.title) throw new AppError("title field required", 400);
     const slug = slugify(input.title);
 
     const board = await Board.create({
