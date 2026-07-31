@@ -18,15 +18,14 @@ export type BoardType = {
   updatedAt: Date;
 };
 
-// export type BoardCreateType = {
-//   title: string;
-//   description: string;
+export type BoardCreateType = {
+  title: string;
+  description: string;
+  slug: string;
+  settings?: {
+    allowVoting?: boolean;
+    allowComments?: boolean;
+  };
+};
 
-//   settings?: {
-//     allowVoting?: boolean;
-//     allowComments?: boolean;
-//   };
-// };
-
-
-export type BoardCreateType = z.infer<typeof createBoardSchema>;
+export type BoardInputType = z.infer<typeof createBoardSchema>;
