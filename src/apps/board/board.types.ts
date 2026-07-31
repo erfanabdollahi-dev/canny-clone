@@ -1,5 +1,7 @@
+import type { Types } from "mongoose";
+
 export type Board = {
-  _id: string;
+  _id: Types.ObjectId;
 
   title: string;
   description: string;

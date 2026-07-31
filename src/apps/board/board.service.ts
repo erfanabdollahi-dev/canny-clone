@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import type { Board } from "./board.types.js";
 
 class BoardService {
@@ -6,7 +7,7 @@ class BoardService {
     const date = new Date();
     return [
       {
-        _id : '1',
+        _id : new ObjectId(),
         title: "Feature Requests",
         description: "Request new features",
         slug: "feature-requests",
@@ -19,7 +20,7 @@ class BoardService {
         updatedAt: date,
       },
       {
-        _id : '2',
+        _id : new ObjectId(),
         title: "Feature Requests",
         description: "Request new features",
         slug: "feature-requests",
