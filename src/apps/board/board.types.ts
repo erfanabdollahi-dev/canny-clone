@@ -1,6 +1,6 @@
 import type { Types } from "mongoose";
 
-export type Board = {
+export type BoardType = {
   _id: Types.ObjectId;
 
   title: string;
@@ -16,7 +16,7 @@ export type Board = {
   updatedAt: Date;
 };
 
-export type CreateBoardInput = {
+export type CreateBoardType = {
   title: string;
   description: string;
   slug: string;

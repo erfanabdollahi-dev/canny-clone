@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import type { Board } from "./board.types.js";
+import type { BoardType } from "./board.types.js";
 
 const boardSchema = new Schema(
   {
@@ -35,6 +35,6 @@ const boardSchema = new Schema(
   },
 );
 
-const Board = model<Board>("Board", boardSchema);
+const Board = model<BoardType>("Board", boardSchema);
 
 export default Board;
