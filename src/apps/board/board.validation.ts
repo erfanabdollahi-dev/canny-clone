@@ -5,7 +5,7 @@ export const createBoardSchema = z.object({
   title : z
     .string()
     .trim()
-    .min(1, "Title field is Required"),
+    .min(1, "Title field is required"),
 
   description : z
     .string()
@@ -24,4 +24,30 @@ export const createBoardSchema = z.object({
 export const findBySlugSchema = z
     .string()
     .trim()
-    .min(1, "Slug field is required feild ")
+    .min(1, "Slug field is required")
+
+export const findByIdSchema = z
+    .string()
+    .trim()
+    .min(1, "ID field is required")
+
+export const updateBoardSchema = z.object({
+  title : z
+    .string()
+    .trim()
+    .min(1)
+    .optional(),
+
+  description : z
+    .string()
+    .trim()
+    .min(1)
+    .optional(),
+  
+  settings : z
+    .object({
+      allowVoting : z.boolean().optional(),
+      allowComments : z.boolean().optional()
+    })
+    .optional()
+})

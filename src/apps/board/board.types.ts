@@ -1,6 +1,6 @@
 import type { Types } from "mongoose";
 import type z from "zod";
-import type { createBoardSchema } from "./board.validation.js";
+import type { createBoardSchema, updateBoardSchema } from "./board.validation.js";
 
 export type BoardType = {
   _id: Types.ObjectId;
@@ -29,3 +29,4 @@ export type BoardCreateType = {
 };
 
 export type BoardInputType = z.infer<typeof createBoardSchema>;
+export type BoardUpdateType = z.infer<typeof updateBoardSchema>

@@ -1,5 +1,5 @@
 import Board from "./board.model.js";
-import type { BoardCreateType, BoardType } from "./board.types.js";
+import type { BoardCreateType, BoardType, BoardUpdateType } from "./board.types.js";
 
 class BoardRepository {
   async findAll() {
@@ -13,6 +13,10 @@ class BoardRepository {
   async findBySlug(slug: string) {
     const board = await Board.findOne({ slug });
 
+    return board?.toObject();
+  }
+  async updateById(id: string, data: Partial<BoardUpdateType>) {
+    const board = await Board.findByIdAndUpdate(id, data, { new: true });
     return board?.toObject();
   }
 }

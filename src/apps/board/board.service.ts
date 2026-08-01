@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import type { BoardType, BoardInputType } from "./board.types.js";
+import type { BoardType, BoardInputType, BoardUpdateType } from "./board.types.js";
 import Board from "./board.model.js";
 import slugify from "@/utils/slugify.js";
 import { AppError } from "@/error/app-error.js";
@@ -33,6 +33,15 @@ class BoardService {
       return board;
     }
     throw new AppError("Board does not exists!", 404);
+  }
+
+  async updateBoard(id: string, data: Partial<BoardUpdateType>): Promise<BoardType> {
+    const board = await BoardRepository.updateById(id, data);
+
+    if (!board) {
+      throw new AppError("Board does not exist", 404);
+    }
+    return board;
   }
 }
 
