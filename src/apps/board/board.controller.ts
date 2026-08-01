@@ -21,7 +21,7 @@ export const createBoard = async (req: Request, res: Response) => {
 
   return res
     .status(201)
-    .json({ message: "Board retrieved successfully", data: board });
+    .json({ message: "Board created successfully", data: board });
 };
 
 export const getBoardBySlug = async (req: Request, res: Response) => {
@@ -29,7 +29,7 @@ export const getBoardBySlug = async (req: Request, res: Response) => {
   const board = await boardService.getBoardBySlug(slug);
   return res
     .status(200)
-    .json({ message: "Board deleted successfully", data: board });
+    .json({ message: "Board retrieved successfully", data: board });
 };
 
 export const updateBoard = async (req: Request, res: Response) => {
