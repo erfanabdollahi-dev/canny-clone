@@ -11,6 +11,13 @@ class PostRepository {
     const post = await Post.create(data);
     return post?.toObject();
   }
+
+  async findById(id : string){
+    const post = await Post.findById(id)
+    
+    
+    return post?.toObject();
+  }
 }
 
 export default new PostRepository();
