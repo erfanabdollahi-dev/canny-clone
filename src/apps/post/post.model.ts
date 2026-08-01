@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { PostStatus } from "./post.types.js";
+import { PostStatus, type PostType } from "./post.types.js";
 
 const postSchema = new Schema(
   {
@@ -16,7 +16,7 @@ const postSchema = new Schema(
       enum: Object.values(PostStatus),
       default: PostStatus.OPEN,
     },
-    boardId: {
+    board_id: {
       type: Schema.Types.ObjectId,
       ref: "Board",
       required: true,
@@ -25,6 +25,6 @@ const postSchema = new Schema(
   { timestamps: true, versionKey: false },
 );
 
-const Post = model("Post", postSchema);
+const Post = model<PostType>("Post", postSchema);
 
 export default Post;
