@@ -3,11 +3,18 @@ import type { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 
 export const errorMiddleware = (
-  err: Error,
+  err: any,
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
+  // Invalid JSON body
+  if (err instanceof SyntaxError && "body" in err) {
+    return res.status(400).json({
+      message: "Invalid JSON format",
+    });
+  }
+
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       message: err.message,
