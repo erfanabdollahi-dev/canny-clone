@@ -1,7 +1,6 @@
 import Board from "./board.model.js";
 import type {
   BoardCreateType,
-  BoardType,
   BoardUpdateType,
 } from "./board.types.js";
 
@@ -27,6 +26,10 @@ class BoardRepository {
   async deleteById(id: string) {
     const board = await Board.findByIdAndDelete(id);
     return board?.toObject();
+  }
+  async findById(id: string) {
+    const board = await Board.findById(id);
+    return board;
   }
 }
 

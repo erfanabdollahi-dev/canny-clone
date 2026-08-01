@@ -43,6 +43,7 @@ class BoardService {
     id: string,
     data: Partial<BoardUpdateType>,
   ): Promise<BoardType> {
+    
     const board = await boardRepository.updateById(id, data);
 
     if (!board) {

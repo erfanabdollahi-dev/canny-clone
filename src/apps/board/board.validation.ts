@@ -1,3 +1,4 @@
+import { isValidObjectId } from 'mongoose';
 import {z} from 'zod';
 
 
@@ -29,7 +30,9 @@ export const findBySlugSchema = z
 export const findByIdSchema = z
     .string()
     .trim()
-    .min(1, "ID field is required")
+    .min(1).refine(isValidObjectId, {
+    message: "Invalid board id",
+  })
 
 export const updateBoardSchema = z.object({
   title : z
