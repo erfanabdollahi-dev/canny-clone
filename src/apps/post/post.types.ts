@@ -1,4 +1,6 @@
 import { Types } from "mongoose";
+import type z from "zod";
+import type { createPostSchema } from "./post.validation.js";
 
 export enum PostStatus {
   OPEN = "OPEN",
@@ -13,7 +15,7 @@ export type PostType = {
   title: string;
   description: string;
 
-  boardId: Types.ObjectId;
+  board_id: Types.ObjectId;
   status: PostStatus;
 
   // voteCount: number;
@@ -23,3 +25,6 @@ export type PostType = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type PostInputType = z.infer<typeof createPostSchema>;
+
