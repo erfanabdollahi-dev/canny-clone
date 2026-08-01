@@ -1,7 +1,7 @@
 import { model, Schema, type HydratedDocument, type InferSchemaType } from "mongoose";
-import { PostStatus, type PostType } from "./post.types.js";
+import { PostStatus, type PostDocument } from "./post.types.js";
 
-const postSchema = new Schema(
+export const postSchema = new Schema(
   {
     title: {
       type: String,
@@ -25,6 +25,9 @@ const postSchema = new Schema(
   { timestamps: true, versionKey: false },
 );
 
-const Post = model<PostType>("Post", postSchema);
 
-export default Post;
+const PostModel = model<PostDocument>("Post", postSchema);
+
+
+
+export default PostModel;

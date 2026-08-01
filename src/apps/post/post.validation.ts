@@ -28,7 +28,7 @@ export const createPostSchema = z.object({
 
 export const findByIdSchema = z
     .string()
-    .trim()
-    .min(1).refine(isValidObjectId, {
-    message: "Invalid post id",
-  })
+  //   .trim()
+  //   .min(1).refine(isValidObjectId, {
+  //   message: "Invalid post id",
+  // })

@@ -1,16 +1,16 @@
 import { AppError } from "@/error/app-error.js";
 import boardRepository from "../board/board.repository.js";
 import postRepository from "./post.repository.js";
-import type { PostInputType, PostType } from "./post.types.js";
+import type { PostDocument, PostInputType } from "./post.types.js";
 import { isValidObjectId } from "mongoose";
 
 class PostService {
-  async getPosts(): Promise<PostType[]> {
+  async getPosts(): Promise<PostDocument[]> {
     const posts = await postRepository.findAll();
     return posts;
   }
 
-  async createPost(data: PostInputType): Promise<PostType> {
+  async createPost(data: PostInputType): Promise<PostDocument> {
     const board = await boardRepository.findById(data.board_id);
     if (!board) {
       throw new AppError("Board not found", 404);
