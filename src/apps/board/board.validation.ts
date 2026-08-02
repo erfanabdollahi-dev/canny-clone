@@ -27,6 +27,12 @@ export const findBySlugSchema = z
     .trim()
     .min(1, "slug field is required")
 
+export const findByIdSchema = z
+    .string()
+    .trim()
+    .min(1).refine(isValidObjectId, {
+    message: "Invalid board id",
+  })
 
 export const updateBoardSchema = z.object({
   title : z
@@ -49,6 +55,3 @@ export const updateBoardSchema = z.object({
     .optional()
 })
 
-export const findByIdSchema = z.string().trim().min(1).refine(isValidObjectId, {
-  message: "Invalid post id",
-});
