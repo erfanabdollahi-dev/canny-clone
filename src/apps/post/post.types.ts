@@ -1,6 +1,6 @@
 import { Types, type HydratedDocument, type InferSchemaType } from "mongoose";
 import type z from "zod";
-import type { createPostSchema } from "./post.validation.js";
+import type { createPostSchema, updatePostSchema } from "./post.validation.js";
 import type { postSchema } from "./post.model.js";
 
 export enum PostStatus {
@@ -10,25 +10,13 @@ export enum PostStatus {
   COMPLETED = "COMPLETED",
 }
 
-// export type PostType = {
-//   _id: Types.ObjectId;
+export type CreatePostInput = z.infer<typeof createPostSchema>;
+export type UpdatePostInput = z.infer<typeof updatePostSchema>;
+export type PostSchema = InferSchemaType<typeof postSchema>;
+export type Post = PostSchema & {
+  _id: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
-//   title: string;
-//   description: string;
-
-//   board_id: Types.ObjectId;
-//   status: PostStatus;
-
-//   // voteCount: number;
-
-//   // imageUrl?: string;
-
-//   createdAt: Date;
-//   updatedAt: Date;
-// };
-
-export type PostInputType = z.infer<typeof createPostSchema>;
-
-export type Post = InferSchemaType<typeof postSchema>;
 export type PostDocument = HydratedDocument<Post>;
-

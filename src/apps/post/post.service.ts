@@ -1,43 +1,43 @@
 import { AppError } from "@/error/app-error.js";
 import boardRepository from "../board/board.repository.js";
 import postRepository from "./post.repository.js";
-import type { Post, PostDocument, PostInputType } from "./post.types.js";
-import { isValidObjectId } from "mongoose";
+import type { CreatePostInput, Post, UpdatePostInput } from "./post.types.js";
 
 class PostService {
-  async getPosts(): Promise<PostDocument[]> {
-    const posts = await postRepository.findAll();
-    return posts;
+  async getPosts(): Promise<Post[]> {
+    return await postRepository.findAll();
   }
 
-  async createPost(data: PostInputType): Promise<PostDocument> {
+  async createPost(data: CreatePostInput): Promise<Post> {
     const board = await boardRepository.findById(data.board_id);
     if (!board) {
       throw new AppError("Board not found", 404);
     }
 
-    const post = await postRepository.create(data);
-    return post;
+    return await postRepository.create(data);
   }
 
-  async getPostById(id: string) {
+  async getPostById(id: string): Promise<Post> {
     const post = await postRepository.findById(id);
 
     if (post) return post;
 
-    throw new AppError("Post does not exist", 404);
+    throw new AppError("Post not found", 404);
   }
 
-  async updatePostById(id: string, data: Partial<Post>) {
+  async updatePostById(
+    id: string,
+    data: UpdatePostInput,
+  ): Promise<Post> {
     const post = await postRepository.updateById(id, data);
     if (post) return post;
-    throw new AppError("Post does not exist", 404);
+    throw new AppError("Post not found", 404);
   }
 
-  async deletePostById(id: string) {
+  async deletePostById(id: string): Promise<Post> {
     const post = await postRepository.deleteById(id);
     if (!post) {
-      throw new AppError("Post does not exist", 404);
+      throw new AppError("Post not found", 404);
     }
     return post;
   }

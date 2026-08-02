@@ -1,3 +1,4 @@
+import type { Types } from "mongoose";
 import Board from "./board.model.js";
 import type {
   BoardCreateType,
@@ -27,7 +28,7 @@ class BoardRepository {
     const board = await Board.findByIdAndDelete(id);
     return board?.toObject();
   }
-  async findById(id: string) {
+  async findById(id: Types.ObjectId) {
     const board = await Board.findById(id);
     return board;
   }

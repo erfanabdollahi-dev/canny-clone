@@ -11,9 +11,11 @@ export const createPostSchema = z.object({
     .string()
     .trim()
     .min(1, "boardId field is required")
+
     .refine(isValidObjectId, {
       message: "Invalid board id",
-    }),
+    })
+    .transform((id) => new Types.ObjectId(id)),
 
   status: z.enum(PostStatus).default(PostStatus.OPEN),
 });
@@ -40,9 +42,6 @@ export const updatePostSchema = z.object({
   status: z.enum(PostStatus).default(PostStatus.OPEN).optional(),
 });
 
-export const findByIdSchema = z
-  .string()
-  .trim()
-  .min(1).refine(isValidObjectId, {
+export const findByIdSchema = z.string().trim().min(1).refine(isValidObjectId, {
   message: "Invalid post id",
-})
+});

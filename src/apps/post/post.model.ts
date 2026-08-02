@@ -1,4 +1,4 @@
-import { model, Schema, type HydratedDocument, type InferSchemaType } from "mongoose";
+import { model, Schema } from "mongoose";
 import { PostStatus, type PostDocument } from "./post.types.js";
 
 export const postSchema = new Schema(
