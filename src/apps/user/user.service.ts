@@ -50,6 +50,18 @@ class UserService {
     const { password, ...PublicUser } = user;
     return PublicUser;
   }
-}
+
+  async deleteUser(id:string){
+    const user = await userRepository.deleteById(id);
+
+    if(!user){
+      throw new AppError("User not found", 404);
+    }
+
+    return user;
+  }
+
+};
+
 
 export default new UserService();

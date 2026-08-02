@@ -20,7 +20,13 @@ class UserRepository {
   }
 
   async updateById(id: string, data: UpdateUserInput) {
-    return await UserModel.findByIdAndUpdate(id, data, {returnDocument : "after"}).lean();
+    return await UserModel.findByIdAndUpdate(id, data, {
+      returnDocument: "after",
+    }).lean();
+  }
+
+  async deleteById(id: string) {
+    return await UserModel.findByIdAndDelete(id);
   }
 }
 

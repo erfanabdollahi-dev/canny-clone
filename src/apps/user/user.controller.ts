@@ -28,10 +28,18 @@ export const getUser = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
   const userId = findByIdSchema.parse(req.params.id);
-  const data: UpdateUserInput = updateUserSchema.parse(req.body);
+  const data = updateUserSchema.parse(req.body);
 
   const user = await userService.updateUser(userId, data);
-  return res.json({ message: "User retrieved successfully", data: user });
+  return res.json({ message: "User updated successfully", data: user });
 };
 
+export const deleteUser = async (req: Request, res: Response) => {
+  const userId = findByIdSchema.parse(req.params.id);
 
+  await userService.deleteUser(userId);
+
+  return res.json({
+    message: "User deleted successfully",
+  });
+};
