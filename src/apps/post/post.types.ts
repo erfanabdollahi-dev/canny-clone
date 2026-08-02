@@ -29,6 +29,6 @@ export enum PostStatus {
 
 export type PostInputType = z.infer<typeof createPostSchema>;
 
-type Post = InferSchemaType<typeof postSchema>;
+export type Post = InferSchemaType<typeof postSchema>;
 export type PostDocument = HydratedDocument<Post>;
 

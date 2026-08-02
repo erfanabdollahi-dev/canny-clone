@@ -1,7 +1,7 @@
 import { AppError } from "@/error/app-error.js";
 import boardRepository from "../board/board.repository.js";
 import postRepository from "./post.repository.js";
-import type { PostDocument, PostInputType } from "./post.types.js";
+import type { Post, PostDocument, PostInputType } from "./post.types.js";
 import { isValidObjectId } from "mongoose";
 
 class PostService {
@@ -25,6 +25,12 @@ class PostService {
 
     if (post) return post;
 
+    throw new AppError("Post does not exist", 404);
+  }
+
+  async updatePostById(id: string, data : Partial<Post>) {
+    const post = await postRepository.updateById(id, data);
+    if (post) return post;
     throw new AppError("Post does not exist", 404);
   }
 }
