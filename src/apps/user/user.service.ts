@@ -1,5 +1,7 @@
+import { AppError } from "@/error/app-error.js";
 import userRepository from "./user.repository.js";
 import type { PublicUser } from "./user.types.js";
+import type { CreateUserInput } from "./user.validation.js";
 
 class UserService {
   async getUsers(): Promise<PublicUser[]> {
@@ -9,6 +11,23 @@ class UserService {
       return publicUser;
     });
     return publicUsers;
+  }
+
+  async createUser(data: CreateUserInput): Promise<PublicUser | undefined> {
+    // check if user with email exists
+    const existingUser = await userRepository.findByEmail(data.email);
+    console.log(existingUser);
+
+    if (existingUser) {
+      throw new AppError("Email already exists", 409);
+    }
+    const user = await userRepository.create(data);
+    if (user) {
+      const { password, ...publicUser } = user;
+      return publicUser;
+    }
+
+    throw new AppError("User was not created", 400);
   }
 }
 

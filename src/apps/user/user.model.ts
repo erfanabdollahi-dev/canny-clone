@@ -3,7 +3,7 @@ import type { User } from "./user.types.js";
 
 export const userSchema = new Schema(
   {
-    fullName: {
+    full_name: {
       type: String,
       required: true,
       trim: true,

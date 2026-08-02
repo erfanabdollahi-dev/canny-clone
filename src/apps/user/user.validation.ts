@@ -2,7 +2,7 @@ import z from "zod";
 
 
 export const createUserSchema = z.object({
-  fullName : z
+  full_name : z
     .string()
     .trim()
     .min(2)
