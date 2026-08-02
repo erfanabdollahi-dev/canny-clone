@@ -19,13 +19,13 @@ class UserRepository {
     return await UserModel.findById(id).lean();
   }
 
-  async updateById(id: string, data: UpdateUserInput) {
+  async updateById(id: string, data: UpdateUserInput): Promise<User | null> {
     return await UserModel.findByIdAndUpdate(id, data, {
       returnDocument: "after",
     }).lean();
   }
 
-  async deleteById(id: string) {
+  async deleteById(id: string): Promise<User | null> {
     return await UserModel.findByIdAndDelete(id);
   }
 }

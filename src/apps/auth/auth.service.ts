@@ -6,15 +6,15 @@ import jwt from "jsonwebtoken";
 import env from "@/config/env.js";
 
 class AuthService {
-  async login(loginData: LoginInput) {
+  async login(data: LoginInput) {
     // check if the user with this email is exists
-    const user = await userRepository.findByEmail(loginData.email);
+    const user = await userRepository.findByEmail(data.email);
     if (!user) {
       throw new AppError("Invalid email or password", 401);
     }
 
     const passwordMatches = await bcrypt.compare(
-      loginData.password,
+      data.password,
       user.password,
     );
     if (passwordMatches === false) {
@@ -32,28 +32,24 @@ class AuthService {
     };
   }
 
-  async register(registerData: RegisterInput) {
+  async register(data: RegisterInput) {
     // check if email exist
-    const emailExist = await userRepository.findByEmail(registerData.email);
+    const emailExist = await userRepository.findByEmail(data.email);
     if (emailExist) {
       throw new AppError("Email already exists", 409);
     }
 
-    try {
-      // hash the password
-      const hashedPassword = await bcrypt.hash(registerData.password, 12);
+    // hash the password
+    const hashedPassword = await bcrypt.hash(data.password, 12);
 
-      const userData = {
-        ...registerData,
-        password: hashedPassword,
-      };
+    const userData = {
+      ...data,
+      password: hashedPassword,
+    };
 
-      const user = await userRepository.create(userData);
-      const { password, ...publicUser } = user;
-      return publicUser;
-    } catch {
-      throw new AppError("Error while creating a user", 500);
-    }
+    const user = await userRepository.create(userData);
+    const { password, ...publicUser } = user;
+    return publicUser;
   }
 }
 
