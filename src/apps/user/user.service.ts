@@ -29,6 +29,15 @@ class UserService {
 
     throw new AppError("User was not created", 400);
   }
+
+  async getUser(id: string): Promise<PublicUser> {
+    const user = await userRepository.findById(id);
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+    const { password, ...PublicUser } = user;
+    return PublicUser;
+  }
 }
 
 export default new UserService();

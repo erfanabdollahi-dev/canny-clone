@@ -13,10 +13,11 @@ class UserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const user =  await UserModel.findOne({ email }).lean();
-    console.log(user);
-    return user
-    
+    return await UserModel.findOne({ email }).lean();
+  }
+
+  async findById(id: string): Promise<User | null> {
+    return await UserModel.findById(id).lean();
   }
 }
 

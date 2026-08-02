@@ -1,3 +1,4 @@
+import { isValidObjectId } from "mongoose";
 import z from "zod";
 
 
@@ -18,6 +19,9 @@ export const createUserSchema = z.object({
       .min(8)
       .max(100)
 })
+export const findByIdSchema = z.string().trim().min(1).refine(isValidObjectId, {
+  message: "Invalid user id",
+});
 
 
 export type CreateUserInput = z.infer<typeof createUserSchema>
