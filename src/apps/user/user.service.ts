@@ -1,7 +1,10 @@
 import { AppError } from "@/error/app-error.js";
 import userRepository from "./user.repository.js";
-import type { PublicUser } from "./user.types.js";
-import type { CreateUserInput } from "./user.validation.js";
+import type {
+  CreateUserInput,
+  PublicUser,
+  UpdateUserInput,
+} from "./user.types.js";
 
 class UserService {
   async getUsers(): Promise<PublicUser[]> {
@@ -32,6 +35,15 @@ class UserService {
 
   async getUser(id: string): Promise<PublicUser> {
     const user = await userRepository.findById(id);
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+    const { password, ...PublicUser } = user;
+    return PublicUser;
+  }
+
+  async updateUser(id: string, data: UpdateUserInput) {
+    const user = await userRepository.updateById(id, data);
     if (!user) {
       throw new AppError("User not found", 404);
     }

@@ -23,5 +23,7 @@ export const findByIdSchema = z.string().trim().min(1).refine(isValidObjectId, {
   message: "Invalid user id",
 });
 
+export const updateUserSchema = z.object({
+  full_name: z.string().trim().min(2).max(100),
+});
 
-export type CreateUserInput = z.infer<typeof createUserSchema>

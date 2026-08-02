@@ -1,6 +1,5 @@
 import UserModel from "./user.model.js";
-import type { User } from "./user.types.js";
-import type { CreateUserInput } from "./user.validation.js";
+import type { CreateUserInput, UpdateUserInput, User } from "./user.types.js";
 
 class UserRepository {
   async findAll(): Promise<User[]> {
@@ -18,6 +17,10 @@ class UserRepository {
 
   async findById(id: string): Promise<User | null> {
     return await UserModel.findById(id).lean();
+  }
+
+  async updateById(id: string, data: UpdateUserInput) {
+    return await UserModel.findByIdAndUpdate(id, data, {returnDocument : "after"}).lean();
   }
 }
 
