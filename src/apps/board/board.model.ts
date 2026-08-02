@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import type { BoardType } from "./board.types.js";
+import type { Board } from "./board.types.js";
 
-const boardSchema = new Schema(
+export const boardSchema = new Schema(
   {
     title: {
       type: String,
@@ -40,6 +40,6 @@ const boardSchema = new Schema(
   },
 );
 
-const Board = model<BoardType>("Board", boardSchema);
+const BoardModel = model<Board>("Board", boardSchema);
 
-export default Board;
+export default BoardModel;

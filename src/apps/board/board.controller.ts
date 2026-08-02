@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import boardService from "./board.service.js";
-import type { BoardCreateType } from "./board.types.js";
+
 import {
   createBoardSchema,
   findByIdSchema,
@@ -43,6 +43,6 @@ export const updateBoard = async (req: Request, res: Response) => {
 
 export const deleteBoard = async (req: Request, res: Response) => {
   const boardId = findByIdSchema.parse(req.params.id);
-  const board = await boardService.deleteBoard(boardId);
+  await boardService.deleteBoard(boardId);
   return res.status(200).json({ message: "Board deleted successfully" });
 };

@@ -1,32 +1,23 @@
-import type { Types } from "mongoose";
+import type { HydratedDocument, InferSchemaType, Types } from "mongoose";
 import type z from "zod";
-import type { createBoardSchema, updateBoardSchema } from "./board.validation.js";
+import type {
+  createBoardSchema,
+  updateBoardSchema,
+} from "./board.validation.js";
+import type { boardSchema } from "./board.model.js";
 
-export type BoardType = {
-  _id: Types.ObjectId;
-
-  title: string;
-  description: string;
+export type CreateBoardInput = z.infer<typeof createBoardSchema>;
+export type CreateBoardRepo = CreateBoardInput & {
   slug: string;
+};
+export type UpdateBoardInput = z.infer<typeof updateBoardSchema>;
 
-  settings: {
-    allowVoting: boolean;
-    allowComments: boolean;
-  };
+export type BoardSchema = InferSchemaType<typeof boardSchema>;
 
+export type Board = BoardSchema & {
+  _id: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 };
 
-export type BoardCreateType = {
-  title: string;
-  description: string;
-  slug: string;
-  settings?: {
-    allowVoting?: boolean;
-    allowComments?: boolean;
-  };
-};
-
-export type BoardInputType = z.infer<typeof createBoardSchema>;
-export type BoardUpdateType = z.infer<typeof updateBoardSchema>
+export type BoardDocument = HydratedDocument<Board>;
