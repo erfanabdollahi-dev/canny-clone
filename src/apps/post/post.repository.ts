@@ -24,6 +24,11 @@ class PostRepository {
 
     return post?.toObject();
   }
+
+  async deleteById(id: string) {
+    const post = await PostModel.findByIdAndDelete(id);
+    return post?.toObject();
+  }
 }
 
 export default new PostRepository();

@@ -28,10 +28,18 @@ class PostService {
     throw new AppError("Post does not exist", 404);
   }
 
-  async updatePostById(id: string, data : Partial<Post>) {
+  async updatePostById(id: string, data: Partial<Post>) {
     const post = await postRepository.updateById(id, data);
     if (post) return post;
     throw new AppError("Post does not exist", 404);
+  }
+
+  async deletePostById(id: string) {
+    const post = await postRepository.deleteById(id);
+    if (!post) {
+      throw new AppError("Post does not exist", 404);
+    }
+    return post;
   }
 }
 

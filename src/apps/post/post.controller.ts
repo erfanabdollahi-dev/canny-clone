@@ -32,8 +32,14 @@ export const getPost = async (req: Request, res: Response) => {
 
 export const updatePost = async (req: Request, res: Response) => {
   const postId = findByIdSchema.parse(req.params.id);
-  const data : Partial<Post> = updatePostSchema.parse(req.body);
+  const data: Partial<Post> = updatePostSchema.parse(req.body);
   const post = await postService.updatePostById(postId, data);
 
   return res.json({ message: "Post updated successfully", data: post });
+};
+
+export const deletePost = async (req: Request, res: Response) => {
+  const postId = findByIdSchema.parse(req.params.id);
+  const post = await postService.deletePostById(postId);
+  return res.json({ message: "Post deleted successfully" });
 };
