@@ -7,6 +7,7 @@ import {
   updatePost,
 } from "./post.controller.js";
 import { authMiddleware } from "@/middlewares/auth.middleware.js";
+import { toggleVote } from "../vote/vote.controller.js";
 
 const router = express.Router();
 
@@ -15,4 +16,5 @@ router.get("/:id", getPost);
 router.post("/",authMiddleware, createPost);
 router.patch("/:id",authMiddleware, updatePost);
 router.delete("/:id",authMiddleware, deletePost);
+router.post('/:id/vote', authMiddleware, toggleVote)
 export default router;

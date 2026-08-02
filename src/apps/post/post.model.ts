@@ -26,6 +26,11 @@ export const postSchema = new Schema(
       ref: "User",
       required : true
     },
+    voteCount : {
+      type : Number,
+      default : 0,
+      
+    }
   },
   { timestamps: true, versionKey: false },
 );
