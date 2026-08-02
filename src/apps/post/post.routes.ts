@@ -6,11 +6,12 @@ import {
   getPosts,
   updatePost,
 } from "./post.controller.js";
+import { authMiddleware } from "@/middlewares/auth.middleware.js";
 
 const router = express.Router();
 
 router.get("/", getPosts);
-router.post("/", createPost);
+router.post("/",authMiddleware, createPost);
 router.get("/:id", getPost);
 router.patch("/:id", updatePost);
 router.delete("/:id", deletePost);

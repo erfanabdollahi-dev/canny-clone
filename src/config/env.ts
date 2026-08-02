@@ -10,6 +10,7 @@ const getEnv = (var_name: string): string => {
 };
 
 const env = {
+  JWT_SECRET : getEnv("JWT_SECRET"),
   MONGO_URI: getEnv("MONGO_URI"),
   PORT: getEnv("PORT"),
 };
