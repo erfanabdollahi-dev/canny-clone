@@ -16,7 +16,7 @@ export const getPosts = async (req: Request, res: Response) => {
 export const createPost = async (req: Request, res: Response) => {
   const data = createPostSchema.parse(req.body);
 
-  const post = await postService.createPost(data);
+  const post = await postService.createPost(data, req.user._id.toString());
   return res
     .status(201)
     .json({ message: "Post created successfully", data: post });
@@ -33,13 +33,15 @@ export const getPost = async (req: Request, res: Response) => {
 export const updatePost = async (req: Request, res: Response) => {
   const postId = findByIdSchema.parse(req.params.id);
   const data: UpdatePostInput = updatePostSchema.parse(req.body);
-  const post = await postService.updatePostById(postId, data);
 
+  const post = await postService.updatePostById(req.user._id.toString(),postId, data);
+  console.log(req.user);
+  
   return res.json({ message: "Post updated successfully", data: post });
 };
 
 export const deletePost = async (req: Request, res: Response) => {
   const postId = findByIdSchema.parse(req.params.id);
-  await postService.deletePostById(postId);
+  await postService.deletePostById(req.user._id.toString(), postId);
   return res.json({ message: "Post deleted successfully" });
 };

@@ -3,7 +3,11 @@ import type { CreatePostInput, Post, UpdatePostInput } from "./post.types.js";
 
 class PostRepository {
   async findAll(): Promise<Post[]> {
-    const posts = await PostModel.find().lean();
+    const posts = await PostModel
+      .find()
+      .populate("author", "full_name email")
+      .populate("board", "title slug")
+      .lean();
     return posts;
   }
 

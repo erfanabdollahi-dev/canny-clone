@@ -16,18 +16,20 @@ export const postSchema = new Schema(
       enum: Object.values(PostStatus),
       default: PostStatus.OPEN,
     },
-    board_id: {
+    board: {
       type: Schema.Types.ObjectId,
       ref: "Board",
       required: true,
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required : true
     },
   },
   { timestamps: true, versionKey: false },
 );
 
-
 const PostModel = model<PostDocument>("Post", postSchema);
-
-
 
 export default PostModel;

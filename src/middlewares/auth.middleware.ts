@@ -33,7 +33,7 @@ export const authMiddleware = async (
     }
 
     req.user = user
-
+    
     next();
   } catch {
     throw new AppError("Unauthorized", 401);
