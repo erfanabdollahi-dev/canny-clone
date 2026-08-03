@@ -3,6 +3,7 @@ import boardRouter from "@/apps/board/index.js";
 import postRouter from "@/apps/post/index.js";
 import userRouter from "@/apps/user/index.js";
 import authRouter from "@/apps/auth/index.js";
+import commentRouter from "@/apps/comment/index.js"
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 
 const app = express();
@@ -13,6 +14,7 @@ app.use("/api/boards", boardRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/comments", commentRouter);
 
 app.use(errorMiddleware);
 
