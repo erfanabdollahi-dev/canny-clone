@@ -6,8 +6,9 @@ import type {
 } from "./comment.types.js";
 
 class CommentRepository {
-  async findByPostId(id: string, sort : 1 | -1 = -1): Promise<Comment[]> {
+  async findByPostId(id: string, sort: 1 | -1 = -1): Promise<Comment[]> {
     return await CommentModel.find({ post: id })
+      .populate("author", "full_name email")
       .sort({
         createdAt: sort,
       })
@@ -17,7 +18,7 @@ class CommentRepository {
   async findById(id: string): Promise<Comment | null> {
     return await CommentModel.findById(id).lean();
   }
-  
+
   async create(data: CreateCommentInput): Promise<Comment> {
     const comment = await CommentModel.create(data);
     return comment.toObject();
@@ -35,8 +36,6 @@ class CommentRepository {
       returnDocument: "after",
     }).lean();
   }
-
-
 }
 
 export default new CommentRepository();

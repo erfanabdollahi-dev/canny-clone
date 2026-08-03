@@ -16,7 +16,7 @@ class PostRepository {
   }
 
   async findById(id: string): Promise<Post | undefined> {
-    const post = await PostModel.findById(id);
+    const post = await PostModel.findById(id).populate("author", "full_name email").populate("board", "title slug")
     return post?.toObject();
   }
 
