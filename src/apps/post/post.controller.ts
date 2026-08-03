@@ -3,15 +3,15 @@ import postService from "./post.service.js";
 import {
   createPostSchema,
   findByIdSchema,
+  postQuerySchema,
   updatePostSchema,
 } from "./post.validation.js";
 import type { UpdatePostInput } from "./post.types.js";
-import { paginationSchema } from "@/common/pagination/pagination.validation.js";
 
 export const getPosts = async (req: Request, res: Response) => {
 
-  const pagination = paginationSchema.parse(req.query)
-  const posts = await postService.getPosts(pagination);
+  const query =  postQuerySchema.parse(req.query)
+  const posts = await postService.getPosts(query);
 
   return res.json({ message: "Posts retrieved successfully", data: posts });
 };

@@ -1,6 +1,7 @@
 import z from "zod";
 import { PostStatus } from "./post.types.js";
 import { isValidObjectId, Types } from "mongoose";
+import { paginationSchema } from "@/common/pagination/pagination.validation.js";
 
 export const createPostSchema = z.object({
   title: z.string().trim().min(1, "title field is required"),
@@ -49,4 +50,18 @@ export const updatePostSchema = z.object({
 
 export const findByIdSchema = z.string().trim().min(1).refine(isValidObjectId, {
   message: "Invalid post id",
+});
+
+
+export const postQuerySchema = paginationSchema.extend({
+  status: z.enum(PostStatus).optional(),
+  board: z
+    .string()
+    .trim()
+    .min(1, "board field is required")
+    .refine(isValidObjectId, {
+      message: "Invalid board id",
+    })
+    .transform((id) => new Types.ObjectId(id))
+    .optional(),
 });
