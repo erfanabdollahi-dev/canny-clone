@@ -6,9 +6,12 @@ import {
   updatePostSchema,
 } from "./post.validation.js";
 import type { UpdatePostInput } from "./post.types.js";
+import { paginationSchema } from "@/common/pagination/pagination.validation.js";
 
 export const getPosts = async (req: Request, res: Response) => {
-  const posts = await postService.getPosts();
+
+  const pagination = paginationSchema.parse(req.query)
+  const posts = await postService.getPosts(pagination);
 
   return res.json({ message: "Posts retrieved successfully", data: posts });
 };

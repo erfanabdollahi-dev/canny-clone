@@ -3,6 +3,8 @@ import boardRepository from "../board/board.repository.js";
 import postRepository from "./post.repository.js";
 import type { CreatePostInput, Post, UpdatePostInput } from "./post.types.js";
 import type { PublicUser } from "../user/user.types.js";
+import type { PaginationQuery } from "@/common/pagination/pagination.types.js";
+import type { PaginatedResult } from "@/common/pagination/pagination.validation.js";
 
 class PostService {
   // helper
@@ -20,8 +22,8 @@ class PostService {
     return post;
   }
 
-  async getPosts(): Promise<Post[]> {
-    return await postRepository.findAll();
+  async getPosts(pagination: PaginationQuery): Promise<PaginatedResult<Post>> {
+    return await postRepository.findAll(pagination);
   }
 
   async createPost(data: CreatePostInput, userId: string): Promise<Post> {
