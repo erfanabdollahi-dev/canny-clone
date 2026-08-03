@@ -11,6 +11,12 @@ export enum PostStatus {
   COMPLETED = "COMPLETED",
 }
 
+export enum PostSortBy {
+  NEWEST = "newest",
+  OLDEST = "oldest",
+  VOTES = "votes",
+}
+
 export type CreatePostInput = z.infer<typeof createPostSchema>;
 export type UpdatePostInput = z.infer<typeof updatePostSchema>;
 export type PostSchema = InferSchemaType<typeof postSchema>;

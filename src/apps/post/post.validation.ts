@@ -1,5 +1,5 @@
 import z from "zod";
-import { PostStatus } from "./post.types.js";
+import { PostSortBy, PostStatus } from "./post.types.js";
 import { isValidObjectId, Types } from "mongoose";
 import { paginationSchema } from "@/common/pagination/pagination.validation.js";
 
@@ -64,4 +64,6 @@ export const postQuerySchema = paginationSchema.extend({
     })
     .transform((id) => new Types.ObjectId(id))
     .optional(),
+
+  sortBy: z.enum(PostSortBy).default(PostSortBy.NEWEST),
 });

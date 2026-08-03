@@ -1,11 +1,11 @@
 import type { PaginatedResult, PaginationQuery } from "@/common/pagination/pagination.types.js";
 import PostModel from "./post.model.js";
-import type { CreatePostInput, Post, PostQuery, PostStatus } from "./post.types.js";
+import { PostSortBy, type CreatePostInput, type Post, type PostQuery, type PostStatus } from "./post.types.js";
 import type { QueryFilter, Types } from "mongoose";
 
 
 class PostRepository {
-  async findAll({page , limit , status, board} :  PostQuery): Promise<PaginatedResult<Post>> {
+  async findAll({page , limit , status, board, sortBy} :  PostQuery): Promise<PaginatedResult<Post>> {
 
     
     const filter : QueryFilter<Post> = {}
@@ -19,8 +19,23 @@ class PostRepository {
     const total = await  PostModel.countDocuments(filter)
     const skip = (page - 1) * limit;
     const pages = Math.ceil(total / limit);
-    
+    let sort = {};
+
+    switch (sortBy) {
+      case PostSortBy.NEWEST:
+        sort = { createdAt: -1 };
+        break;
+
+      case PostSortBy.OLDEST:
+        sort = { createdAt: 1 };
+        break;
+
+      case PostSortBy.VOTES:
+        sort = { voteCount: -1 };
+        break;
+    }
     const posts = await PostModel.find(filter)
+      .sort(sort)
       .skip(skip)
       .limit(limit)
       .populate("author", "full_name")
