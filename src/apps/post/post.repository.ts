@@ -37,10 +37,16 @@ class PostRepository {
     return await PostModel.findByIdAndUpdate(
       postId,
       { $inc: { voteCount: amount } },
-      { new: true },
+      { returnDocument : 'after'},
     ).lean();
   }
-
+  async updateCommentCount(postId: string, amount : 1 | -1) {
+    return await PostModel.findByIdAndUpdate(
+      postId,
+      { $inc: { commentCount: amount } },
+      {  returnDocument : 'after' },
+    ).lean();
+  }
 
 }
 
