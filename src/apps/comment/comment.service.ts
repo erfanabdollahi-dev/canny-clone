@@ -7,6 +7,7 @@ import type {
   UpdateCommentInput,
 } from "./comment.types.js";
 import type { Types } from "mongoose";
+import type { PaginatedResult, PaginationQuery } from "@/common/pagination/pagination.types.js";
 
 class CommentService {
   // ----- helper function -----
@@ -28,13 +29,13 @@ class CommentService {
   }
 
   // ----- get comments -----
-  async getComments(postId: string): Promise<Comment[]> {
+  async getComments(postId: string, pagination: PaginationQuery  ): Promise<PaginatedResult<Comment>> {
     // check if post exists
     const post = await postRepository.findById(postId);
     if (!post) {
       throw new AppError("Post not found", 404);
     }
-    return await commentRepository.findByPostId(postId, -1);
+    return await commentRepository.findByPostId(postId, -1, pagination);
   }
 
   // ----- create comment -----

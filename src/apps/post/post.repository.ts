@@ -1,7 +1,7 @@
-import type { PaginationQuery } from "@/common/pagination/pagination.types.js";
+import type { PaginatedResult, PaginationQuery } from "@/common/pagination/pagination.types.js";
 import PostModel from "./post.model.js";
 import type { CreatePostInput, Post } from "./post.types.js";
-import type { PaginatedResult } from "@/common/pagination/pagination.validation.js";
+
 
 class PostRepository {
   async findAll({

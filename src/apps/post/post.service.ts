@@ -3,8 +3,7 @@ import boardRepository from "../board/board.repository.js";
 import postRepository from "./post.repository.js";
 import type { CreatePostInput, Post, UpdatePostInput } from "./post.types.js";
 import type { PublicUser } from "../user/user.types.js";
-import type { PaginationQuery } from "@/common/pagination/pagination.types.js";
-import type { PaginatedResult } from "@/common/pagination/pagination.validation.js";
+import type { PaginatedResult, PaginationQuery } from "@/common/pagination/pagination.types.js";
 
 class PostService {
   // helper

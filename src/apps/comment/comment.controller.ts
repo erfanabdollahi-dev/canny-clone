@@ -6,15 +6,16 @@ import {
 } from "./comment.validation.js";
 import mongoose from "mongoose";
 import { findByIdSchema } from "../post/post.validation.js";
+import { paginationSchema } from "@/common/pagination/pagination.validation.js";
 
 // "get" /id:/comments
 export const getComments = async (req: Request, res: Response) => {
 
-  console.log('k')
-  
+
+  const pagination = paginationSchema.parse(req.query)
   const postId = findByIdSchema.parse(req.params.id);
 
-  const comments = await commentService.getComments(postId);
+  const comments = await commentService.getComments(postId, pagination);
 
   return res.json({
     message: "Comments retrieved successfully",

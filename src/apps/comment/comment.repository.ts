@@ -1,3 +1,4 @@
+import type { PaginatedResult, PaginationQuery } from "@/common/pagination/pagination.types.js";
 import CommentModel from "./comment.model.js";
 import type {
   Comment,
@@ -5,15 +6,24 @@ import type {
   UpdateCommentInput,
 } from "./comment.types.js";
 
+
 class CommentRepository {
-  async findByPostId(id: string, sort: 1 | -1 = -1): Promise<Comment[]> {
-    return await CommentModel.find({ post: id })
+  async findByPostId(id: string, sort: 1 | -1 = -1,{page, limit} : PaginationQuery): Promise<PaginatedResult<Comment>> {
+    const skip = (page - 1) * limit;
+    const total = await  CommentModel.countDocuments();
+    const pages = Math.ceil(total / limit);
+    const comments = await CommentModel.find({ post: id })
+      .skip(skip)
+      .limit(limit)
       .populate("author", "full_name email")
       .sort({
         createdAt: sort,
       })
       .lean();
+
+      return {data : comments, pagination : {page , total, limit, pages} }
   }
+
 
   async findById(id: string): Promise<Comment | null> {
     return await CommentModel.findById(id).lean();
