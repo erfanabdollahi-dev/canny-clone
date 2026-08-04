@@ -10,9 +10,10 @@ import cors from "cors";
 import env from "./config/env.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "@/docs/swagger.js";
+import { httpLogger } from "./middlewares/logger.middleware.js";
 
 const app = express();
-
+app.use(httpLogger);
 app.use(
   cors({
     origin: env.FRONTEND_URL,

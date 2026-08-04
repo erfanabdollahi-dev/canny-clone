@@ -1,4 +1,5 @@
 import { AppError } from "@/error/app-error.js";
+import logger from "@/utils/logger.js";
 import type { NextFunction, Request, Response } from "express";
 import fs from "node:fs/promises";
 import { ZodError } from "zod";
@@ -43,7 +44,7 @@ export const errorMiddleware = async (
     });
   }
 
-  console.error(err);
+  logger.error(err, "Database error");
 
   return res.status(500).json({
     message: "Internal Server Error",
