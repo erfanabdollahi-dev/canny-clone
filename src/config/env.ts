@@ -13,6 +13,7 @@ const env = {
   JWT_SECRET : getEnv("JWT_SECRET"),
   MONGO_URI: getEnv("MONGO_URI"),
   PORT: getEnv("PORT"),
+  SERVER_URL : getEnv("SERVER_URL")
 };
 
 export default env;

@@ -3,6 +3,7 @@ import boardRepository from "../board/board.repository.js";
 import postRepository from "./post.repository.js";
 import type { CreatePostInput, Post, PostQuery, UpdatePostInput } from "./post.types.js";
 import type { PaginatedResult } from "@/common/pagination/pagination.types.js";
+import env from "@/config/env.js";
 
 class PostService {
   // helper
@@ -32,6 +33,7 @@ class PostService {
     const postData = {
       ...data,
       author: userId,
+      image :`${env.SERVER_URL}/${data.image}`
     };
     return await postRepository.create(postData);
   }
