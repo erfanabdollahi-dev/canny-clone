@@ -167,6 +167,12 @@ Install dependencies:
 npm install
 ```
 
+Create admin User:
+
+```bash
+npm run create-admin
+```
+
 ---
 
 # Environment Variables
