@@ -6,8 +6,18 @@ import authRouter from "@/apps/auth/index.js";
 import commentRouter from "@/apps/comment/index.js";
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 import helmet from "helmet";
+import cors from "cors";
+import env from "./config/env.js";
+
 
 const app = express();
+
+app.use(
+  cors({
+    origin: env.FRONTEND_URL,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(helmet());
 
