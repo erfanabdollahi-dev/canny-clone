@@ -6,12 +6,13 @@ import {
   getBoards,
   updateBoard,
 } from "./board.controller.js";
+import { requireAdmin } from "@/middlewares/role.middleware.js";
 
 const router = express.Router();
 
 router.get("/", getBoards);
-router.post("/", createBoard);
+router.post("/", requireAdmin ,createBoard);
 router.get("/:slug", getBoardBySlug);
-router.patch("/:id", updateBoard);
-router.delete("/:id", deleteBoard);
+router.patch("/:id", requireAdmin ,updateBoard);
+router.delete("/:id", requireAdmin ,deleteBoard);
 export default router;

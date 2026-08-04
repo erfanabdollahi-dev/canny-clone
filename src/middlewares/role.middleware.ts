@@ -1,6 +1,6 @@
 import { UserRole } from "@/apps/user/user.types.js"
 import { AppError } from "@/error/app-error.js"
-import type { NextFunction, Request } from "express"
+import type { NextFunction, Request, Response } from "express"
 
 
 
@@ -17,3 +17,4 @@ export const requireAdmin = (
   next()
 
 }
+
