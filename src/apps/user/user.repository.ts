@@ -19,7 +19,7 @@ class UserRepository {
     return await UserModel.findById(id).lean();
   }
 
-  async updateById(id: string, data: UpdateUserInput): Promise<User | null> {
+  async updateById(id: string, data: Partial<User>): Promise<User | null> {
     return await UserModel.findByIdAndUpdate(id, data, {
       returnDocument: "after",
     }).lean();
@@ -27,6 +27,36 @@ class UserRepository {
 
   async deleteById(id: string): Promise<User | null> {
     return await UserModel.findByIdAndDelete(id);
+  }
+
+  async findByResetToken(token: string): Promise<User | null> {
+    return await UserModel.findOne(
+      {
+        resetPasswordToken: token,
+        resetPasswordExpires: {
+          $gt: new Date(),
+        },
+      },
+      { returnDocument: "after" },
+    ).lean();
+  }
+
+  async updatePassword(id: string, password: string): Promise<User | null> {
+    return await UserModel.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          password,
+        },
+        $unset: {
+          resetPasswordToken: "",
+          resetPasswordExpires: "",
+        },
+      },
+      {
+        returnDocument: "after",
+      },
+    ).lean();
   }
 }
 

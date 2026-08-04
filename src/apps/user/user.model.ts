@@ -17,15 +17,23 @@ export const userSchema = new Schema(
       trim: true,
     },
 
-    role : {
-      type : String,
-      enum : Object.values(UserRole),
-      default : UserRole.USER
+    role: {
+      type: String,
+      enum: Object.values(UserRole),
+      default: UserRole.USER,
     },
 
     password: {
       type: String,
       required: true,
+    },
+
+    resetPasswordToken: {
+      type: String,
+    },
+
+    resetPasswordExpires: {
+      type: Date,
     },
   },
   { timestamps: true, versionKey: false },
