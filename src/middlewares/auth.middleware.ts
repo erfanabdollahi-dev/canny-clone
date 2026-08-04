@@ -31,8 +31,8 @@ export const authMiddleware = async (
     if (!user) {
       throw new AppError("Unauthorized", 401);
     }
-
-    req.user = user
+    const { password, ...publicUser } = user;
+    req.user = publicUser
     
     next();
   } catch {
