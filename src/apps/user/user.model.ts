@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import type { User } from "./user.types.js";
+import { UserRole, type User } from "./user.types.js";
 
 export const userSchema = new Schema(
   {
@@ -15,6 +15,12 @@ export const userSchema = new Schema(
       unique: true,
       lowercase: true,
       trim: true,
+    },
+
+    role : {
+      type : String,
+      enum : Object.values(UserRole),
+      default : UserRole.USER
     },
 
     password: {

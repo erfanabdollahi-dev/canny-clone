@@ -48,7 +48,6 @@ export const getMe = async  (
   req: Request,
   res: Response
 ) => {
-  console.log(req.user);
   
   return res.json({
     message: "Current user retrieved successfully",
