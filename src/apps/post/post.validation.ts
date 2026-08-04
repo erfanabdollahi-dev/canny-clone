@@ -66,4 +66,5 @@ export const postQuerySchema = paginationSchema.extend({
     .optional(),
 
   sortBy: z.enum(PostSortBy).default(PostSortBy.NEWEST),
+  search: z.string().trim().default("")
 });

@@ -1,22 +1,51 @@
-import type { PaginatedResult, PaginationQuery } from "@/common/pagination/pagination.types.js";
+import type {
+  PaginatedResult,
+  PaginationQuery,
+} from "@/common/pagination/pagination.types.js";
 import PostModel from "./post.model.js";
-import { PostSortBy, type CreatePostInput, type Post, type PostQuery, type PostStatus } from "./post.types.js";
+import {
+  PostSortBy,
+  type CreatePostInput,
+  type Post,
+  type PostQuery,
+  type PostStatus,
+} from "./post.types.js";
 import type { QueryFilter, Types } from "mongoose";
 
-
 class PostRepository {
-  async findAll({page , limit , status, board, sortBy} :  PostQuery): Promise<PaginatedResult<Post>> {
+  async findAll({
+    page,
+    limit,
+    status,
+    board,
+    sortBy,
+    search,
+  }: PostQuery): Promise<PaginatedResult<Post>> {
+    const filter: QueryFilter<Post> = {};
 
-    
-    const filter : QueryFilter<Post> = {}
-    
-    if(status){
-      filter.status = status
+    if (status) {
+      filter.status = status;
     }
-    if(board){
-      filter.board = board
+    if (board) {
+      filter.board = board;
     }
-    const total = await  PostModel.countDocuments(filter)
+    if (search) {
+      filter.$or = [
+        {
+          title: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+        {
+          description: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+      ];
+    }
+    const total = await PostModel.countDocuments(filter);
     const skip = (page - 1) * limit;
     const pages = Math.ceil(total / limit);
     let sort = {};
@@ -42,9 +71,8 @@ class PostRepository {
       .populate("board", "title slug")
       .lean();
 
-    return { data : posts, pagination : {page ,total, limit, pages }};
+    return { data: posts, pagination: { page, total, limit, pages } };
   }
-
 
   async create(data: CreatePostInput): Promise<Post> {
     const post = await PostModel.create(data);
