@@ -12,7 +12,9 @@ export type User = UserSchema & {
 export type PublicUser = Omit<User, "password">;
 
 export type PostDocument = HydratedDocument<User>;
-export type CreateUserInput = z.infer<typeof createUserSchema>;
+export type CreateUserInput = z.infer<typeof createUserSchema> & {
+  role?: UserRole
+}
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 
 export enum UserRole {
