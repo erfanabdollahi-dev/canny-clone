@@ -17,7 +17,9 @@ export enum PostSortBy {
   VOTES = "votes",
 }
 
-export type CreatePostInput = z.infer<typeof createPostSchema>;
+export type CreatePostInput = z.infer<typeof createPostSchema> & {
+  image : string | null | undefined
+};
 export type UpdatePostInput = z.infer<typeof updatePostSchema>;
 export type PostSchema = InferSchemaType<typeof postSchema>;
 export type Post = PostSchema & {

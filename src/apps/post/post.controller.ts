@@ -9,8 +9,7 @@ import {
 import type { UpdatePostInput } from "./post.types.js";
 
 export const getPosts = async (req: Request, res: Response) => {
-
-  const query =  postQuerySchema.parse(req.query)
+  const query = postQuerySchema.parse(req.query);
   const posts = await postService.getPosts(query);
 
   return res.json({ message: "Posts retrieved successfully", data: posts });
@@ -18,8 +17,12 @@ export const getPosts = async (req: Request, res: Response) => {
 
 export const createPost = async (req: Request, res: Response) => {
   const data = createPostSchema.parse(req.body);
+  const postData = {
+    ...data,
+    image: req.file?.path,
+  };
 
-  const post = await postService.createPost(data, req.user._id.toString());
+  const post = await postService.createPost(postData, req.user._id.toString());
   return res
     .status(201)
     .json({ message: "Post created successfully", data: post });
@@ -37,9 +40,13 @@ export const updatePost = async (req: Request, res: Response) => {
   const postId = findByIdSchema.parse(req.params.id);
   const data: UpdatePostInput = updatePostSchema.parse(req.body);
 
-  const post = await postService.updatePostById(req.user._id.toString(),postId, data);
+  const post = await postService.updatePostById(
+    req.user._id.toString(),
+    postId,
+    data,
+  );
   console.log(req.user);
-  
+
   return res.json({ message: "Post updated successfully", data: post });
 };
 

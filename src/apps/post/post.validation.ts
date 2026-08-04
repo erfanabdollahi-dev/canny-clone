@@ -19,6 +19,8 @@ export const createPostSchema = z.object({
     .transform((id) => new Types.ObjectId(id)),
 
   status: z.enum(PostStatus).default(PostStatus.OPEN),
+
+
 });
 
 export const updatePostSchema = z.object({

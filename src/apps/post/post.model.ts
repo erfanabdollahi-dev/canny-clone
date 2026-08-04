@@ -16,6 +16,9 @@ export const postSchema = new Schema(
       enum: Object.values(PostStatus),
       default: PostStatus.OPEN,
     },
+    image : {
+      type : String,
+    },
     board: {
       type: Schema.Types.ObjectId,
       ref: "Board",
