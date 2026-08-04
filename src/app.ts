@@ -8,7 +8,8 @@ import { errorMiddleware } from "./middlewares/error.middleware.js";
 import helmet from "helmet";
 import cors from "cors";
 import env from "./config/env.js";
-
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "@/docs/swagger.js";
 
 const app = express();
 
@@ -23,11 +24,14 @@ app.use(helmet());
 
 app.use("/uploads", express.static("uploads"));
 
-app.use("/api/boards", boardRouter);
-app.use("/api/posts", postRouter);
-app.use("/api/users", userRouter);
-app.use("/api/auth", authRouter);
-app.use("/api/comments", commentRouter);
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/boards", boardRouter);
+app.use("/api/v1/posts", postRouter);
+app.use("/api/v1/comments", commentRouter);
 
 app.use(errorMiddleware);
 
