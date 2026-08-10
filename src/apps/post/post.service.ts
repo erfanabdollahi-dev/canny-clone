@@ -40,7 +40,7 @@ class PostService {
 
   async getPostById(id: string): Promise<Post> {
     const post = await postRepository.findById(id);
-
+    
     if (post) return post;
 
     throw new AppError("Post not found", 404);

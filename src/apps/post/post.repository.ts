@@ -70,7 +70,6 @@ class PostRepository {
       .populate("author", "full_name")
       .populate("board", "title slug")
       .lean();
-
     return { data: posts, pagination: { page, total, limit, pages } };
   }
 
