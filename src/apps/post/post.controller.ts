@@ -10,7 +10,10 @@ import type { UpdatePostInput } from "./post.types.js";
 
 export const getPosts = async (req: Request, res: Response) => {
   const query = postQuerySchema.parse(req.query);
-  const posts = await postService.getPosts(query);
+  const userId = req?.user?._id?.toString();
+  console.log(userId);
+  
+  const posts = await postService.getPosts(query, userId);
 
   return res.json({ message: "Posts retrieved successfully", data: posts });
 };

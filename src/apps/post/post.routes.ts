@@ -6,7 +6,7 @@ import {
   getPosts,
   updatePost,
 } from "./post.controller.js";
-import { authMiddleware } from "@/middlewares/auth.middleware.js";
+import { authMiddleware, optionalAuthMiddleware } from "@/middlewares/auth.middleware.js";
 import { toggleVote } from "../vote/vote.controller.js";
 import { createComment, getComments } from "../comment/comment.controller.js";
 import upload from "@/middlewares/upload.middleware.js";
@@ -24,7 +24,7 @@ const router = express.Router();
  *       200:
  *         description: Posts retrieved successfully
  */
-router.get("/", getPosts);
+router.get("/",optionalAuthMiddleware, getPosts);
 /**
  * @openapi
  * /posts/{id}/comments:

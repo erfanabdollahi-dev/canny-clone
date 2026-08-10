@@ -62,6 +62,9 @@ class PostRepository {
       case PostSortBy.VOTES:
         sort = { voteCount: -1 };
         break;
+      default:
+        sort = { createdAt: -1 }
+        break;
     }
     const posts = await PostModel.find(filter)
       .sort(sort)
@@ -70,7 +73,6 @@ class PostRepository {
       .populate("author", "full_name")
       .populate("board", "title slug")
       .lean();
-
     return { data: posts, pagination: { page, total, limit, pages } };
   }
 

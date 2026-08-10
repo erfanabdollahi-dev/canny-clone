@@ -7,6 +7,7 @@ import {
   updateBoard,
 } from "./board.controller.js";
 import { requireAdmin } from "@/middlewares/role.middleware.js";
+import { authMiddleware } from "@/middlewares/auth.middleware.js";
 
 const router = express.Router();
 /**
@@ -22,7 +23,7 @@ const router = express.Router();
  *         description: Boards retrieved successfully
  */
 router.get("/", getBoards);
-router.post("/", requireAdmin ,createBoard);
+router.post("/",authMiddleware, requireAdmin ,createBoard);
 /**
  * @openapi
  * /boards/{slug}:
