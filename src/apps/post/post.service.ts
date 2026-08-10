@@ -4,6 +4,8 @@ import postRepository from "./post.repository.js";
 import type { CreatePostInput, Post, PostQuery, UpdatePostInput } from "./post.types.js";
 import type { PaginatedResult } from "@/common/pagination/pagination.types.js";
 import env from "@/config/env.js";
+import VoteModel from "../vote/vote.model.js";
+import type { Types } from "mongoose";
 
 class PostService {
   // helper
@@ -21,8 +23,30 @@ class PostService {
     return post;
   }
 
-  async getPosts(query: PostQuery): Promise<PaginatedResult<Post>> {
-    return await postRepository.findAll(query);
+  async getPosts(query: PostQuery, userId?: string): Promise<PaginatedResult<Post>> {
+    const response = await postRepository.findAll(query);
+    const posts = response.data
+    const postIds = response.data.map((post) => post._id);
+    const votes = userId ? await VoteModel.find({
+      user: userId,
+      post: { $in: postIds }
+    }).select("post") : []
+    
+    const votedPostIds = new Set(
+      votes.map((vote) => vote.post.toString()),
+    );
+
+    const postsWithVoteStatus = posts.map((post) => ({
+      ...post,
+
+      hasVoted: votedPostIds.has(
+        post._id.toString(),
+      ),
+    }));
+    return {
+      ...response,
+      data: postsWithVoteStatus,
+    };
   }
 
   async createPost(data: CreatePostInput, userId: string): Promise<Post> {
@@ -33,14 +57,14 @@ class PostService {
     const postData = {
       ...data,
       author: userId,
-      image :`${env.SERVER_URL}/${data.image}`
+      image: `${env.SERVER_URL}/${data.image}`
     };
     return await postRepository.create(postData);
   }
 
   async getPostById(id: string): Promise<Post> {
     const post = await postRepository.findById(id);
-    
+
     if (post) return post;
 
     throw new AppError("Post not found", 404);

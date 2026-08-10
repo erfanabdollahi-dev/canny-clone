@@ -13,7 +13,7 @@ import swaggerSpec from "@/docs/swagger.js";
 import { httpLogger } from "./middlewares/logger.middleware.js";
 
 const app = express();
-app.use(httpLogger);
+// app.use(httpLogger);
 app.use(
   cors({
     origin: env.FRONTEND_URL,

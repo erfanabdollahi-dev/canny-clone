@@ -24,6 +24,7 @@ export type UpdatePostInput = z.infer<typeof updatePostSchema>;
 export type PostSchema = InferSchemaType<typeof postSchema>;
 export type Post = PostSchema & {
   _id: Types.ObjectId;
+  hasVoted: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
